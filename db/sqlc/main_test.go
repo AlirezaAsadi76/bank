@@ -2,6 +2,7 @@ package db
 
 import (
 	"database/sql"
+	"firstprj/envi"
 	_ "github.com/lib/pq"
 	"log"
 	"os"
@@ -11,13 +12,12 @@ import (
 var queryTest *Queries
 var GlobalDB *sql.DB
 
-const (
-	driver = "postgres"
-	path   = "postgresql://root:123456@127.0.0.1:5432/bank?sslmode=disable"
-)
-
 func TestMain(m *testing.M) {
-	conn, err := sql.Open(driver, path)
+	config, err := envi.LoadConfig("../..")
+	if err != nil {
+		log.Fatal("envi can not load :", err)
+	}
+	conn, err := sql.Open(config.DbDriver, config.DbPath)
 	if err != nil {
 		log.Fatal("db can not connection")
 	}
