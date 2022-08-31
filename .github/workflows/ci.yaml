@@ -37,13 +37,11 @@ jobs:
         with:
           go-version: 1.18
       - name: install migrate
-        run:  curl -s https://packagecloud.io/install/repositories/golang-migrate/migrate/script.deb.sh | sudo bash
-      - name: mv migrate
-        run: sudo apt-get update
-      - name: mv migrate
-        run: sudo apt-get install migrate
-      - name: which
-        run: which migrate
+        run: |
+          curl -s https://packagecloud.io/install/repositories/golang-migrate/migrate/script.deb.sh | sudo bash
+          sudo apt-get update
+          sudo apt-get install migrate
+          which migrate
       - name: migrate
         run: make migrateup
 
